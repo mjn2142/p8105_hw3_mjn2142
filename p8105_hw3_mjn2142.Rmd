@@ -36,6 +36,9 @@ data("instacart")
 
 The instacart dataset is quite large, with 15 columns and 1384617 rows. The table is structured with each row corresponding to a single item ordered from instacart and the associated information for that single item. Some key variables are "order_id," "user_id," "product_name," "aisle_id," department_id," "aisle," and "department." For example, the first item in the table is given the number 1, order_id is 1, user_id is 112108, product_name is Bulgarian Yogurt, aisle_id is 120, department_id is 16, aisle is yogurt, and department is dairy eggs. As made clear by this example, important variables take both numeric and alphabetic forms. Certain columns will also be made up of distinct data while others will have a few highly repeated categories. 
 
+```{r}
+distinct(instacart, aisle_id)
+```
 
 
 
