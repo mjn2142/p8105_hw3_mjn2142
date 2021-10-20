@@ -162,3 +162,25 @@ two_thousand_ten_df = brfss_df %>%
 
 In 2002 ony 36 states had 7 or more locations observed. In 2010, that number went up to 45 states. Some states saw increases in the number of locations observed, but some also saw decreases, so it would be inappropriate to say based on this table alone there was a trend in terms of increases or decreases in numbers of locations observed per state.
 
+```{r, warning = FALSE, message = FALSE}
+excellent_df = brfss_df %>% 
+  filter(response == "Excellent") %>% 
+  group_by(year, locationabbr) %>% 
+  summarize(data_value_mean = mean(data_value)) %>% 
+  ggplot(aes(x = year, y = data_value_mean, group = locationabbr, color = locationabbr)) +
+  geom_point() +
+  geom_line(alpha = 0.5) +
+  theme(legend.position = "right")
+
+ggsave("excellent_plot.png")
+knitr::include_graphics("excellent_plot.png")
+```
+
+This spaghetti plot shows that values will both increase as well as decrease across the years for a single state.
+
+```{r}
+
+```
+
+
+
