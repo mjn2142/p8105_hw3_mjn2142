@@ -178,15 +178,21 @@ knitr::include_graphics("excellent_plot.png")
 
 This spaghetti plot shows that values will both increase as well as decrease across the years for a single state.
 
-```{r}
+```{r, message = FALSE}
 ny_df = brfss_df %>% 
   filter(
     locationabbr == "NY",
     year == "2006" | year == "2010"
   ) %>% 
+  mutate(
+    response = factor(response, levels = c("Poor", "Fair", "Good", "Very good", "Excellent"))
+    ) %>% 
   ggplot(aes(x = response, y = data_value, color = year)) +
   geom_point(alpha = 0.5) +
   facet_grid(.~year)
+
+ggsave("ny_plot.png")
+knitr::include_graphics("ny_plot.png")
 ```
 
 
