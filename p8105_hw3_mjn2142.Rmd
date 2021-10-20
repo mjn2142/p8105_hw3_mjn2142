@@ -146,4 +146,19 @@ brfss_df = brfss_smart2010 %>%
   )
 ```
 
+```{r}
+two_thousand_two_df = brfss_df %>% 
+  filter(year == "2002") %>% 
+  group_by(locationabbr) %>% 
+  summarize(location_obs = n()) %>% 
+  filter(location_obs >= 7)
+
+two_thousand_ten_df = brfss_df %>% 
+  filter(year == "2010") %>% 
+  group_by(locationabbr) %>% 
+  summarize(location_obs = n()) %>% 
+  filter(location_obs >= 7)
+```
+
+In 2002 ony 36 states had 7 or more locations observed. In 2010, that number went up to 45 states. Some states saw increases in the number of locations observed, but some also saw decreases, so it would be inappropriate to say based on this table alone there was a trend in terms of increases or decreases in numbers of locations observed per state.
 
