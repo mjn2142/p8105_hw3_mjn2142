@@ -195,5 +195,33 @@ ggsave("ny_plot.png")
 knitr::include_graphics("ny_plot.png")
 ```
 
+The two years show similar trends, with "Good" and "Very good" being the most popular responses, "Excellent" being in the middle, and "Fair" and "Poor" being the least popular, in terms of the data_value metric.
+
+### Problem 3
+
+Tidying accelerometer data
+
+```{r}
+accel_df = read_csv("./accel_data.csv") %>% 
+  janitor::clean_names() %>% 
+  mutate(
+    week_classification = ifelse(day == "Saturday" | day == "Sunday", "Weekend", "Weekday")
+  ) %>% 
+  relocate(week, day_id, day, week_classification)
+```
+
+Create aggregate variable
+
+```{r}
+aggregate_accel_df = accel_df %>% 
+  mutate(
+    aggregate_activity = select(., activity_1:activity_1440) %>% rowSums(na.rm = TRUE)
+  ) %>% 
+  relocate(week, day_id, day, week_classification, aggregate_activity)
+```
+
+ADD TREND COMMENTS.
+
+Accelerometer plot
 
 
