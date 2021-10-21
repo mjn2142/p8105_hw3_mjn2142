@@ -72,7 +72,7 @@ ggsave("aisle_plot.png")
 knitr::include_graphics("aisle_plot.png")
 ```
 
-Most of the data points are below 40,000 in this plot, with only 5 aisles that have more than 40,000 items ordered
+Most of the data points are below 40,000 in this plot, with only 5 aisles that have more than 40,000 items ordered.Those 5 aisles are fresh vegetables, fresh fruits, packaged vegetables fruits, yogurt, and packaged cheese. Of these, only fresh vegetables and fresh fruits had over 120,000 orders.
 
 ## Table of Most Popular Items in 3 Specific Aisles
 
@@ -170,7 +170,7 @@ brfss_df = brfss_smart2010 %>%
   )
 ```
 
-## Analyzing 2002 and 2010 data
+## Analyzing 2002 and 2010 Data
 
 ```{r}
 two_thousand_two_df = brfss_df %>% 
@@ -242,9 +242,9 @@ The two years show similar trends, with "Good" and "Very good" being the most po
 
 ### Problem 3
 
-## Tidying accelerometer data
+## Tidying Accelerometer Data
 
-```{r}
+```{r, message = FALSE}
 accel_df = read_csv("./accel_data.csv") %>% 
   janitor::clean_names() %>% 
   mutate(
@@ -256,19 +256,22 @@ accel_df = read_csv("./accel_data.csv") %>%
 
 The tidied accelerometer dataset has variables for week, day_id, day, week_classification, and then 1440 columns of accelerometer representing each minute of the day. The table is 35 rows by 1440 columns (50,400 observations). The data set is quite large and, notably, extremely wide in structure.
 
-## Create aggregate variable
+## Create Aggregate Variable
 
 ```{r}
 aggregate_accel_df = accel_df %>% 
   mutate(
     aggregate_activity = select(., activity_1:activity_1440) %>% rowSums(na.rm = TRUE)
   ) %>% 
-  relocate(week, day_id, day, week_classification, aggregate_activity)
+  relocate(week, day_id, day, week_classification, aggregate_activity) %>% 
+  select(week, day_id, day, week_classification, aggregate_activity)
+
+knitr::kable(aggregate_accel_df, format = "html")
 ```
 
 It appears from this data table that the accelerometer was not used on certain days. On two days specifically, the sum of all readings equaled 1440, which indicates that the accelerometer had a reading of '1' at every meaning of the day. Since 1 is its lowest reportable count, it indicates that personal negligence on the part of the participant affected the data, and on certain days led to no readings at all. Beyond that, it is difficult to draw many conclusions from evaluating the total activity for each day, as it seems size in totals don't neatly correspond to specific days of the week.
 
-## Accelerometer plot
+## Accelerometer Plot
 
 ```{r, message = FALSE}
 accel_plot = accel_df %>% 
